@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ловись, рыбка — рыбалка для Android</title>
+<meta name="description" content="«Ловись, рыбка»: тёплая азартная рыбалка для Android. 8 мест, боссы, клады, турниры. Бесплатно, без аккаунта, можно играть без интернета.">
+<meta name="theme-color" content="#0B1F3A">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://vitosfbi1-maker.github.io/">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ловись, рыбка">
+<meta property="og:title" content="Ловись, рыбка — рыбалка для Android">
+<meta property="og:description" content="Рыбалка с боссами, кладами и турнирами. Уже в Google Play.">
+<meta property="og:image" content="https://vitosfbi1-maker.github.io/img/banner_ru.jpg">
+<meta property="og:url" content="https://vitosfbi1-maker.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<script>document.documentElement.className+=' js';</script>
+<link rel="stylesheet" href="fonts.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Wander & Fish","url":"https://vitosfbi1-maker.github.io/","email":"wanderfish2@gmail.com","logo":"https://vitosfbi1-maker.github.io/img/icon-192.png"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"Ловись, рыбка","alternateName":"Catch of the Day: Fishing Game","operatingSystem":"ANDROID","applicationCategory":"GameApplication","url":"https://play.google.com/store/apps/details?id=com.wanderfish.lovisrybka","image":"https://vitosfbi1-maker.github.io/img/icon-192.png","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Wander & Fish"}}
+</script>
+<style>
+:root{
+  --bg:#0B1F3A; --bg2:#0d2749; --deep:#07152b;
+  --ink:#F6EBD0; --soft:#d3deee; --muted:#9db2cf;
+  --gold:#F5B53C; --gold-hi:#FFDC85; --gold-lo:#E58E1B; --coral:#FF7A45; --teal:#1FB4C6;
+  --line:rgba(255,255,255,.14); --glass:rgba(255,255,255,.065);
+  --gutter:clamp(18px,4vw,32px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);overflow-x:hidden;
+  font:400 17px/1.6 'Rubik',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:8px}
+.wrap{
+  width:100%;max-width:1200px;margin-inline:auto;
+  padding-left:max(var(--gutter),env(safe-area-inset-left,0px));
+  padding-right:max(var(--gutter),env(safe-area-inset-right,0px));
+}
+html[data-lang="ru"] [data-l]:not([data-l="ru"]),
+html[data-lang="uk"] [data-l]:not([data-l="uk"]),
+html[data-lang="en"] [data-l]:not([data-l="en"]){display:none}
+
+/* ---------- шапка ---------- */
+.nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:max(16px,env(safe-area-inset-top,0px)) 8px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand img{width:38px;height:38px;flex:none;border-radius:11px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.brand b{font:400 clamp(15px,4.3vw,25px)/1 'Ruslan Display','Rubik',Georgia,serif;letter-spacing:.02em;white-space:nowrap;color:var(--ink)}
+.brand b i{font-style:normal;color:var(--gold);padding:0 .1em}
+.lang{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(7,21,43,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lang button{
+  font:600 13px/1 'Rubik',system-ui,sans-serif;color:var(--soft);background:transparent;border:0;border-radius:999px;
+  padding:9px 11px;min-height:36px;cursor:pointer;letter-spacing:.04em;
+}
+.lang button:hover{color:#fff}
+.lang button[aria-pressed="true"]{background:var(--gold);color:#241800}
+
+@media (max-width:360px){.brand b{display:none}}
+
+/* ---------- герой ---------- */
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(180deg,#127aa6 0%,#0e5c8a 26%,#0b3b69 58%,#0a2850 100%);
+  padding-bottom:clamp(56px,9vw,110px);
+}
+.rays{position:absolute;inset:-10% -10% 30%;z-index:-1;pointer-events:none;opacity:.9;
+  background:repeating-linear-gradient(104deg,rgba(255,255,255,.10) 0 46px,rgba(255,255,255,0) 46px 150px);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 85%);mask-image:linear-gradient(180deg,#000 0%,transparent 85%);
+  animation:sway 14s ease-in-out infinite alternate;transform-origin:50% 0}
+.rays.r2{opacity:.55;background:repeating-linear-gradient(98deg,rgba(255,255,255,.09) 0 28px,rgba(255,255,255,0) 28px 110px);animation-duration:19s;animation-direction:alternate-reverse}
+@keyframes sway{from{transform:skewX(-6deg) translateX(-2%)}to{transform:skewX(5deg) translateX(2%)}}
+.bubbles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bubbles i{
+  position:absolute;bottom:-40px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.55);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.55),rgba(255,255,255,.06) 60%);
+  animation:rise var(--t) linear var(--w) infinite;opacity:0
+}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}8%{opacity:.8}50%{transform:translate(14px,-45vh)}100%{transform:translate(-10px,-110vh);opacity:0}}
+.fish{position:absolute;z-index:-1;pointer-events:none;width:var(--w);top:var(--y);left:0;color:var(--c);opacity:var(--o,.5);animation:swim var(--t) linear var(--d) infinite;will-change:transform}
+.fish svg{display:block;width:100%;height:auto;animation:bobf 3.4s ease-in-out infinite alternate}
+.fish.flip svg{transform:scaleX(-1)}
+@keyframes swim{from{transform:translateX(112vw)}to{transform:translateX(-30vw)}}
+.fish.flip{animation-name:swimr}
+@keyframes swimr{from{transform:translateX(-30vw)}to{transform:translateX(112vw)}}
+@keyframes bobf{from{translate:0 -6px}to{translate:0 8px}}
+
+.hero-grid{display:grid;gap:clamp(18px,4vw,40px);align-items:center;padding-top:clamp(18px,4vw,48px)}
+@media (min-width:900px){.hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}}
+.copy{min-width:0;text-align:center}
+@media (min-width:900px){.copy{text-align:left}}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-radius:999px;
+  background:rgba(7,21,43,.42);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-weight:600;font-size:14px;letter-spacing:.03em;color:var(--gold-hi)
+}
+.badge::before{content:"";width:9px;height:9px;border-radius:50%;background:#58e08a;box-shadow:0 0 0 0 rgba(88,224,138,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(88,224,138,0)}100%{box-shadow:0 0 0 0 rgba(88,224,138,0)}}
+h1{
+  margin:18px 0 0;font:400 clamp(52px,14.2vw,112px)/.96 'Ruslan Display','Rubik',Georgia,serif;letter-spacing:.01em;text-wrap:balance;
+  background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 0 #4a2a00) drop-shadow(0 16px 26px rgba(0,0,0,.38));
+  padding-bottom:.06em
+}
+.lead{margin:22px auto 0;max-width:30em;font-size:clamp(17px,2.3vw,21px);color:var(--soft);text-wrap:balance}
+@media (min-width:900px){.lead{margin-left:0}}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;justify-content:center}
+@media (min-width:900px){.cta{justify-content:flex-start}}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:58px;padding:0 26px;border-radius:18px;
+  font:600 17px/1 'Rubik',system-ui,sans-serif;text-decoration:none;cursor:pointer;border:0;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease
+}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.play{
+  background:linear-gradient(180deg,#ffd36b,#f5b53c 55%,#ea9a1f);color:#2a1a00;
+  box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 10px 0 -2px #a8650a,0 22px 34px -10px rgba(245,181,60,.55)
+}
+.btn.play:hover{transform:translateY(-2px)}
+.btn.play:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 5px 0 -2px #a8650a,0 12px 20px -8px rgba(245,181,60,.5)}
+.btn.ghost{background:rgba(7,21,43,.38);color:var(--ink);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn.ghost:hover{background:rgba(255,255,255,.14)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none;justify-content:center}
+@media (min-width:900px){.chips{justify-content:flex-start}}
+.chips li{padding:7px 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--soft);background:rgba(7,21,43,.36);border:1px solid rgba(255,255,255,.16)}
+
+/* телефоны */
+.stage{position:relative;width:min(100%,560px);margin-inline:auto;aspect-ratio:1/.95;perspective:1300px}
+.stage-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s ease-out;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.glow{position:absolute;left:12%;right:12%;top:8%;bottom:6%;border-radius:50%;z-index:0;
+  background:radial-gradient(closest-side,rgba(255,200,90,.42),rgba(31,180,198,.24) 55%,transparent 75%);filter:blur(10px)}
+.phone{
+  --r:clamp(20px,3.6vw,34px);--b:clamp(5px,.9vw,8px);
+  position:absolute;border-radius:var(--r);padding:var(--b);background:linear-gradient(160deg,#27395a,#0a1224 55%,#18263f);
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.18) inset,0 40px 60px -22px rgba(0,0,0,.65),0 8px 18px rgba(0,0,0,.35)
+}
+.phone img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:calc(var(--r) - var(--b));background:#08172c}
+.stage .phone{animation:bob 6s ease-in-out infinite alternate}
+.p-c{left:26.5%;width:47%;top:0;z-index:3}
+.p-l{left:1%;width:37%;top:13%;z-index:2;rotate:-9deg;animation-delay:-2s!important;filter:brightness(.82)}
+.p-r{right:1%;width:37%;top:13%;z-index:2;rotate:9deg;animation-delay:-4s!important;filter:brightness(.82)}
+@keyframes bob{from{translate:0 0}to{translate:0 -14px}}
+
+.waves{position:absolute;left:0;right:0;bottom:-1px;height:clamp(46px,7.5vw,96px);overflow:hidden;pointer-events:none}
+.waves svg{position:absolute;left:0;bottom:0;width:200%;height:100%;animation:wave 20s linear infinite}
+.waves svg.w2{animation-duration:32s;animation-direction:reverse;opacity:.5;height:88%}
+@keyframes wave{to{transform:translateX(-50%)}}
+
+/* ---------- секции ---------- */
+section{position:relative}
+.sec{padding-block:clamp(52px,8vw,104px)}
+.eyebrow{margin:0 0 12px;font:600 13px/1.2 'Rubik',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+h2{margin:0;font:400 clamp(32px,6vw,58px)/1.05 'Ruslan Display','Rubik',Georgia,serif;color:var(--ink);text-wrap:balance}
+.sub{margin:14px 0 0;max-width:34em;color:var(--muted);font-size:clamp(16px,2vw,19px)}
+.head{margin-bottom:clamp(28px,5vw,52px)}
+
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(4,1fr);gap:18px}}
+.card{
+  position:relative;padding:24px 22px 26px;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.085),rgba(255,255,255,.03));
+  border:1px solid var(--line);overflow:hidden;transition:transform .25s ease,border-color .25s ease,background .25s ease;min-width:0
+}
+.card::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(closest-side,rgba(31,180,198,.22),transparent);transition:opacity .25s;opacity:.7}
+.card:hover{transform:translateY(-5px);border-color:rgba(245,181,60,.55)}
+.ico{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;margin-bottom:16px;
+  background:linear-gradient(160deg,rgba(245,181,60,.22),rgba(245,181,60,.06));border:1px solid rgba(245,181,60,.4);color:var(--gold-hi)}
+.ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{margin:0 0 6px;font:600 19px/1.25 'Rubik',system-ui,sans-serif;color:var(--ink)}
+.card p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.55}
+
+.shots-sec{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 22%,var(--bg2) 78%,var(--bg) 100%)}
+.track{
+  list-style:none;margin:0;padding:8px max(var(--gutter),env(safe-area-inset-left,0px)) 26px;
+  display:flex;gap:clamp(14px,2.4vw,26px);overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:rgba(245,181,60,.5) transparent
+}
+.track li{flex:0 0 min(62vw,236px);scroll-snap-align:center;min-width:0}
+.track figure{margin:0}
+.track .phone{position:relative;margin:0;transition:transform .3s ease}
+.track figcaption{margin-top:14px;text-align:center;font-size:14.5px;font-weight:600;color:var(--soft)}
+.track .phone:hover{transform:translateY(-8px) rotate(-1deg)}
+@media (min-width:1060px){
+  .track{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible;max-width:1200px;margin-inline:auto;padding-inline:var(--gutter)}
+  .track li{flex:none}
+  .track li[data-i="1"],.track li[data-i="3"]{transform:translateY(28px)}
+}
+.note{margin:18px auto 0;max-width:46em;text-align:center;color:var(--muted);font-size:14px}
+
+.studio{display:grid;gap:clamp(24px,5vw,56px);align-items:start}
+@media (min-width:900px){.studio{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}}
+.studio p{margin:0 0 14px;max-width:34em;color:var(--soft)}
+.studio .sub{margin-top:16px}
+.contact{
+  padding:clamp(22px,4vw,34px);border-radius:26px;border:1px solid rgba(245,181,60,.38);
+  background:radial-gradient(120% 140% at 0% 0%,rgba(245,181,60,.16),rgba(255,255,255,.03) 55%);
+  display:grid;gap:16px;min-width:0
+}
+.contact .lbl{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.mail{font:600 clamp(19px,4.4vw,28px)/1.25 'Rubik',system-ui,sans-serif;color:var(--ink);word-break:break-all;text-decoration:none}
+.mail:hover{color:var(--gold-hi)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.btn.sm{min-height:48px;padding:0 20px;font-size:16px;border-radius:14px}
+.btn.line{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--ink)}
+.btn.line:hover{background:rgba(255,255,255,.1)}
+.btn.gold{background:var(--gold);color:#241800}
+.btn.gold:hover{background:var(--gold-hi)}
+.priv{color:var(--soft);font-size:15px}
+.priv:hover{color:var(--gold-hi)}
+
+footer{background:var(--deep);border-top:1px solid var(--line);padding-block:30px max(34px,env(safe-area-inset-bottom,0px));color:var(--muted);font-size:14px}
+footer .wrap{display:grid;gap:8px}
+footer p{margin:0}
+
+/* плавающая кнопка на телефоне */
+.dock{
+  position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:20;width:min(92vw,380px);
+  transform:translate(-50%,180%);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  min-height:56px;border-radius:18px;
+}
+.dock.on{transform:translate(-50%,0)}
+@media (min-width:900px){.dock{display:none}}
+@media (max-width:899px){footer{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
+
+/* появление при прокрутке */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease var(--d,0ms),transform .7s ease var(--d,0ms)}
+.js .rv.in{opacity:1;transform:none}
+.js .card.rv.in:hover{transform:translateY(-5px)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+  .bubbles,.fish{display:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="fish" viewBox="0 0 120 70">
+      <path fill="currentColor" d="M8 35C25 6 70 2 92 28L116 8c-4 16-4 38 0 54L92 42C70 68 25 64 8 35Z"/>
+      <path fill="none" stroke="rgba(7,21,43,.35)" stroke-width="3" stroke-linecap="round" d="M52 22c8 13 8 13 0 26"/>
+      <circle cx="29" cy="30" r="5.200" fill="#fff"/><circle cx="28" cy="30" r="2.600" fill="#07152b"/>
+    </symbol>
+    <symbol id="play" viewBox="0 0 24 24"><path fill="currentColor" d="M6 3.500v17a1 1 0 0 0 1.500.9l14-8.500a1 1 0 0 0 0-1.800l-14-8.500A1 1 0 0 0 6 3.500Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="hero" id="top">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="rays r2" aria-hidden="true"></div>
+  <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+  <div class="fish" style="--w:92px;--y:34%;--t:46s;--d:-8s;--c:#FFB84D;--o:.5" aria-hidden="true"><svg viewBox="0 0 120 70"><use href="#fish"/></svg></div>
+  <div class="fish flip" style="--w:64px;--y:58%;--t:58s;--d:-30s;--c:#7be0ee;--o:.42" aria-hidden="true"><svg viewBox="0 0 120 70"><use href="#fish"/></svg></div>
+  <div class="fish" style="--w:132px;--y:72%;--t:72s;--d:-20s;--c:#FF7A45;--o:.30" aria-hidden="true"><svg viewBox="0 0 120 70"><use href="#fish"/></svg></div>
+  <div class="fish flip" style="--w:48px;--y:22%;--t:40s;--d:-14s;--c:#ffe7a6;--o:.36" aria-hidden="true"><svg viewBox="0 0 120 70"><use href="#fish"/></svg></div>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Ловись, рыбка">
+      <a class="brand" href="#top"><img src="img/icon-192.png" width="40" height="40" alt=""><b><span data-l="ru">Ловись, рыбка</span><span data-l="uk">Ловись, рибко</span><span data-l="en">Catch of the Day</span></b></a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="ru" aria-pressed="true">RU</button>
+        <button type="button" data-lang-btn="uk" aria-pressed="false">UK</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="copy">
+        <span class="badge"><span data-l="ru">Уже в Google Play</span><span data-l="uk">Уже в Google Play</span><span data-l="en">Now on Google Play</span></span>
+        <h1><span data-l="ru">Ловись, рыбка</span><span data-l="uk">Ловись, рибко</span><span data-l="en">Catch of the Day</span></h1>
+        <p class="lead"><span data-l="ru">Тёплая азартная рыбалка для телефона. Лови, прокачивай лодку и открывай новые воды.</span><span data-l="uk">Тепла азартна рибалка для телефона. Лови, прокачуй човен і відкривай нові води.</span><span data-l="en">Warm, addictive fishing for your phone. Catch, upgrade your boat and discover new waters.</span></p>
+        <div class="cta">
+          <a class="btn play" id="play" href="https://play.google.com/store/apps/details?id=com.wanderfish.lovisrybka" rel="noopener">
+            <svg aria-hidden="true"><use href="#play"/></svg><span data-l="ru">Скачать в Google Play</span><span data-l="uk">Завантажити в Google Play</span><span data-l="en">Get it on Google Play</span>
+          </a>
+          <a class="btn ghost" href="#shots"><span data-l="ru">Смотреть игру</span><span data-l="uk">Дивитися гру</span><span data-l="en">See the game</span></a>
+        </div>
+        <ul class="chips"><li><span data-l="ru">Бесплатно</span><span data-l="uk">Безкоштовно</span><span data-l="en">Free to play</span></li><li><span data-l="ru">Без аккаунта</span><span data-l="uk">Без акаунта</span><span data-l="en">No account</span></li><li><span data-l="ru">RU · UK · EN</span><span data-l="uk">RU · UK · EN</span><span data-l="en">RU · UK · EN</span></li></ul>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="stage-in" id="stageIn">
+          <div class="glow"></div>
+<div class="phone p-l" aria-hidden="true"><img data-l="ru" src="img/ru_1.jpg" width="432" height="768" alt="" decoding="async"><img data-l="uk" src="img/uk_1.jpg" width="432" height="768" alt="" decoding="async"><img data-l="en" src="img/en_1.jpg" width="432" height="768" alt="" decoding="async"></div>
+<div class="phone p-c" aria-hidden="true"><img data-l="ru" src="img/ru_2.jpg" width="432" height="768" alt="" decoding="async"><img data-l="uk" src="img/uk_2.jpg" width="432" height="768" alt="" decoding="async"><img data-l="en" src="img/en_2.jpg" width="432" height="768" alt="" decoding="async"></div>
+<div class="phone p-r" aria-hidden="true"><img data-l="ru" src="img/ru_3.jpg" width="432" height="768" alt="" decoding="async"><img data-l="uk" src="img/uk_3.jpg" width="432" height="768" alt="" decoding="async"><img data-l="en" src="img/en_3.jpg" width="432" height="768" alt="" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w2" viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="#0d2749" d="M0 58Q150 8 300 58T600 58T900 58T1200 58T1500 58T1800 58T2100 58T2400 58V100H0Z"/></svg>
+    <svg viewBox="0 0 2400 100" preserveAspectRatio="none"><path fill="#0B1F3A" d="M0 66Q150 22 300 66T600 66T900 66T1200 66T1500 66T1800 66T2100 66T2400 66V100H0Z"/></svg>
+  </div>
+</header>
+
+<a class="btn play dock" id="dock" href="https://play.google.com/store/apps/details?id=com.wanderfish.lovisrybka" rel="noopener" tabindex="-1" aria-hidden="true">
+  <svg aria-hidden="true"><use href="#play"/></svg><span data-l="ru">Скачать в Google Play</span><span data-l="uk">Завантажити в Google Play</span><span data-l="en">Get it on Google Play</span>
+</a>
+
+<main>
+  <section class="sec" id="about-game">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow"><span data-l="ru">Об игре</span><span data-l="uk">Про гру</span><span data-l="en">About the game</span></p>
+        <h2><span data-l="ru">Что внутри</span><span data-l="uk">Що всередині</span><span data-l="en">What's inside</span></h2>
+        <p class="sub"><span data-l="ru">Спокойная рыбалка на пару минут, которая затягивает: от тихого пруда до глубин океана.</span><span data-l="uk">Спокійна рибалка на кілька хвилин, яка затягує: від тихого ставка до глибин океану.</span><span data-l="en">Relaxed fishing for a few minutes at a time that pulls you in: from a quiet pond to the ocean depths.</span></p>
+      </div>
+      <div class="grid">
+<article class="card rv" style="--d:0ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4.2l2.8 1.8M9.5 2.8h5"/></svg></span><h3><span data-l="ru">Рейс за 90 секунд</span><span data-l="uk">Рейс за 90 секунд</span><span data-l="en">A trip in 90 seconds</span></h3><p><span data-l="ru">Одним пальцем: коснись экрана, и крючок нырнёт за добычей.</span><span data-l="uk">Одним пальцем: торкнись екрана, і гачок пірне за здобиччю.</span><span data-l="en">One finger: tap the screen and the hook dives after the catch.</span></p></article>
+<article class="card rv" style="--d:70ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s6.5-5.7 6.5-11A6.5 6.5 0 0 0 5.5 10c0 5.3 6.5 11 6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span><h3><span data-l="ru">8 мест для рыбалки</span><span data-l="uk">8 місць для рибалки</span><span data-l="en">8 fishing spots</span></h3><p><span data-l="ru">От тихого пруда до глубин океана.</span><span data-l="uk">Від тихого ставка до глибин океану.</span><span data-l="en">From a quiet pond to the ocean depths.</span></p></article>
+<article class="card rv" style="--d:140ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12c3-5 8.5-6.5 13-3.2L21 6.5v11l-5-2.3C11.500 18.500 6 17 3 12Z"/><circle cx="8.200" cy="11" r=".9" fill="currentColor"/></svg></span><h3><span data-l="ru">Более 50 видов рыб</span><span data-l="uk">Понад 50 видів риб</span><span data-l="en">Over 50 kinds of fish</span></h3><p><span data-l="ru">Собирай журнал улова и ищи редких и золотых.</span><span data-l="uk">Збирай журнал улову й шукай рідкісних і золотих.</span><span data-l="en">Fill your catch logbook and hunt the rare and golden ones.</span></p></article>
+<article class="card rv" style="--d:210ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 10.500V19h16v-8.500M3 10.500h18V8a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v2.500Z"/><path d="M10.500 13.500h3v3h-3z"/></svg></span><h3><span data-l="ru">Боссы и клады</span><span data-l="uk">Боси й скарби</span><span data-l="en">Bosses and treasure</span></h3><p><span data-l="ru">Бои с боссами, находки со дна и 71 артефакт.</span><span data-l="uk">Бої з босами, знахідки з дна й 71 артефакт.</span><span data-l="en">Boss fights, finds from the seabed and 71 artifacts.</span></p></article>
+<article class="card rv" style="--d:0ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 15.500h18l-2.500 4h-13L3 15.500ZM12 3.500v12M12 4.500c3.500 1.500 5.500 5 5.500 9H12M10.500 8c-1.200 1.600-2 3.500-2.200 5.500h2.200"/></svg></span><h3><span data-l="ru">Лодки и снасти</span><span data-l="uk">Човни й снасті</span><span data-l="en">Boats and tackle</span></h3><p><span data-l="ru">7 лодок и прокачка снастей: от вёсельной до исследовательского судна.</span><span data-l="uk">7 човнів і прокачування снастей: від веслового до дослідницького судна.</span><span data-l="en">7 boats and upgradable tackle, from a rowboat to a research vessel.</span></p></article>
+<article class="card rv" style="--d:70ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4h10v5.500a5 5 0 0 1-10 0V4ZM7 6H4c0 3 1.200 4.500 3.200 5M17 6h3c0 3-1.200 4.500-3.200 5M12 14.500V18M8.500 20.500h7M10 18h4"/></svg></span><h3><span data-l="ru">Турниры и события</span><span data-l="uk">Турніри й події</span><span data-l="en">Tournaments and events</span></h3><p><span data-l="ru">Турниры дня и недели, праздничные события по календарю.</span><span data-l="uk">Турніри дня й тижня, святкові події за календарем.</span><span data-l="en">Daily and weekly tournaments, seasonal events through the year.</span></p></article>
+<article class="card rv" style="--d:140ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.500 9.500a14 14 0 0 1 19 0M5.500 12.800a9.500 9.500 0 0 1 13 0M8.500 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/><path d="M4 4l16 16"/></svg></span><h3><span data-l="ru">Без интернета и аккаунта</span><span data-l="uk">Без інтернету й акаунта</span><span data-l="en">No internet, no account</span></h3><p><span data-l="ru">Играй где угодно. Прогресс хранится на телефоне, перенести можно кодом.</span><span data-l="uk">Грай будь-де. Прогрес зберігається на телефоні, перенести можна кодом.</span><span data-l="en">Play anywhere. Progress lives on your phone and moves with a backup code.</span></p></article>
+<article class="card rv" style="--d:210ms"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span><h3><span data-l="ru">Три языка</span><span data-l="uk">Три мови</span><span data-l="en">Three languages</span></h3><p><span data-l="ru">Русский, украинский и английский.</span><span data-l="uk">Російська, українська та англійська.</span><span data-l="en">Russian, Ukrainian and English.</span></p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec shots-sec" id="shots">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow"><span data-l="ru">Из игры</span><span data-l="uk">З гри</span><span data-l="en">In the game</span></p>
+        <h2><span data-l="ru">Загляни на борт</span><span data-l="uk">Зазирни на борт</span><span data-l="en">Step aboard</span></h2>
+      </div>
+    </div>
+    <ul class="track rv" aria-label="Screenshots">
+<li data-l="ru" data-i="0"><figure><div class="phone"><img src="img/ru_1.jpg" width="432" height="768" alt="Главный экран" loading="lazy" decoding="async"></div><figcaption>Главный экран</figcaption></figure></li>
+<li data-l="uk" data-i="0"><figure><div class="phone"><img src="img/uk_1.jpg" width="432" height="768" alt="Головний екран" loading="lazy" decoding="async"></div><figcaption>Головний екран</figcaption></figure></li>
+<li data-l="en" data-i="0"><figure><div class="phone"><img src="img/en_1.jpg" width="432" height="768" alt="Home screen" loading="lazy" decoding="async"></div><figcaption>Home screen</figcaption></figure></li>
+<li data-l="ru" data-i="1"><figure><div class="phone"><img src="img/ru_2.jpg" width="432" height="768" alt="Рейс" loading="lazy" decoding="async"></div><figcaption>Рейс</figcaption></figure></li>
+<li data-l="uk" data-i="1"><figure><div class="phone"><img src="img/uk_2.jpg" width="432" height="768" alt="Рейс" loading="lazy" decoding="async"></div><figcaption>Рейс</figcaption></figure></li>
+<li data-l="en" data-i="1"><figure><div class="phone"><img src="img/en_2.jpg" width="432" height="768" alt="A fishing trip" loading="lazy" decoding="async"></div><figcaption>A fishing trip</figcaption></figure></li>
+<li data-l="ru" data-i="2"><figure><div class="phone"><img src="img/ru_3.jpg" width="432" height="768" alt="Бой с боссом" loading="lazy" decoding="async"></div><figcaption>Бой с боссом</figcaption></figure></li>
+<li data-l="uk" data-i="2"><figure><div class="phone"><img src="img/uk_3.jpg" width="432" height="768" alt="Бій із босом" loading="lazy" decoding="async"></div><figcaption>Бій із босом</figcaption></figure></li>
+<li data-l="en" data-i="2"><figure><div class="phone"><img src="img/en_3.jpg" width="432" height="768" alt="Boss fight" loading="lazy" decoding="async"></div><figcaption>Boss fight</figcaption></figure></li>
+<li data-l="ru" data-i="3"><figure><div class="phone"><img src="img/ru_4.jpg" width="432" height="768" alt="Снасти и лодки" loading="lazy" decoding="async"></div><figcaption>Снасти и лодки</figcaption></figure></li>
+<li data-l="uk" data-i="3"><figure><div class="phone"><img src="img/uk_4.jpg" width="432" height="768" alt="Снасті й човни" loading="lazy" decoding="async"></div><figcaption>Снасті й човни</figcaption></figure></li>
+<li data-l="en" data-i="3"><figure><div class="phone"><img src="img/en_4.jpg" width="432" height="768" alt="Tackle and boats" loading="lazy" decoding="async"></div><figcaption>Tackle and boats</figcaption></figure></li>
+<li data-l="ru" data-i="4"><figure><div class="phone"><img src="img/ru_5.jpg" width="432" height="768" alt="Артефакты" loading="lazy" decoding="async"></div><figcaption>Артефакты</figcaption></figure></li>
+<li data-l="uk" data-i="4"><figure><div class="phone"><img src="img/uk_5.jpg" width="432" height="768" alt="Артефакти" loading="lazy" decoding="async"></div><figcaption>Артефакти</figcaption></figure></li>
+<li data-l="en" data-i="4"><figure><div class="phone"><img src="img/en_5.jpg" width="432" height="768" alt="Artifacts" loading="lazy" decoding="async"></div><figcaption>Artifacts</figcaption></figure></li>
+    </ul>
+    <div class="wrap"><p class="note"><span data-l="ru">В игре есть реклама и покупки за реальные деньги. Покупки необязательны. Игра не предназначена для детей младше 13 лет.</span><span data-l="uk">У грі є реклама й покупки за реальні гроші. Покупки необов'язкові. Гру не призначено для дітей віком до 13 років.</span><span data-l="en">The game contains ads and in-app purchases for real money. Purchases are optional. The game is not intended for children under 13.</span></p></div>
+  </section>
+
+  <section class="sec" id="studio">
+    <div class="wrap studio">
+      <div class="rv">
+        <p class="eyebrow"><span data-l="ru">Поддержка</span><span data-l="uk">Підтримка</span><span data-l="en">Support</span></p>
+        <h2><span data-l="ru">Вопросы и идеи</span><span data-l="uk">Питання та ідеї</span><span data-l="en">Questions and ideas</span></h2>
+        <p class="sub" style="margin-bottom:18px"><span data-l="ru">Нашли ошибку или есть идея, как сделать игру лучше? Напишите нам на почту.</span><span data-l="uk">Знайшли помилку або є ідея, як зробити гру кращою? Напишіть нам на пошту.</span><span data-l="en">Found a bug or have an idea to make the game better? Write to us by email.</span></p>
+        <p><span data-l="ru">Аккаунт не нужен: прогресс хранится на вашем телефоне. Чтобы перенести его на другой телефон, возьмите код сохранения в настройках игры.</span><span data-l="uk">Акаунт не потрібен: прогрес зберігається на вашому телефоні. Щоб перенести його на інший телефон, візьміть код збереження в налаштуваннях гри.</span><span data-l="en">No account needed: your progress is stored on your phone. To move it to another phone, take the backup code from the game settings.</span></p>
+      </div>
+      <div class="contact rv" style="--d:100ms">
+        <span class="lbl"><span data-l="ru">Связаться</span><span data-l="uk">Зв'язок</span><span data-l="en">Contact</span></span>
+        <a class="mail" id="mail" href="mailto:wanderfish2@gmail.com">wanderfish2@gmail.com</a>
+        <div class="row">
+          <a class="btn sm gold" href="mailto:wanderfish2@gmail.com"><span data-l="ru">Написать</span><span data-l="uk">Написати</span><span data-l="en">Write to us</span></a>
+          <button class="btn sm line" type="button" id="copy" data-copied="OK" data-copied-ru="Скопировано" data-copied-uk="Скопійовано" data-copied-en="Copied"><span data-l="ru">Копировать</span><span data-l="uk">Копіювати</span><span data-l="en">Copy</span></button>
+        </div>
+        <a class="priv" id="privacy" href="https://vitosfbi1-maker.github.io/lovis-rybka-privacy/#ru"><span data-l="ru">Политика конфиденциальности</span><span data-l="uk">Політика конфіденційності</span><span data-l="en">Privacy Policy</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Wander &amp; Fish · <span data-l="ru">разработчик игры</span><span data-l="uk">розробник гри</span><span data-l="en">game developer</span></p>
+    <p><span data-l="ru">Google Play — товарный знак Google LLC.</span><span data-l="uk">Google Play — торгова марка Google LLC.</span><span data-l="en">Google Play is a trademark of Google LLC.</span></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var langs = ['ru', 'uk', 'en'];
+  var titles = {ru: 'Ловись, рыбка — рыбалка для Android', uk: 'Ловись, рибко — рибалка для Android', en: 'Catch of the Day — fishing game for Android'};
+  var descs = {
+    ru: '«Ловись, рыбка»: тёплая азартная рыбалка для Android. 8 мест, боссы, клады, турниры. Бесплатно, без аккаунта, можно играть без интернета.',
+    uk: '«Ловись, рибко»: тепла азартна рибалка для Android. 8 місць, боси, скарби, турніри. Безкоштовно, без акаунта, можна грати без інтернету.',
+    en: 'Catch of the Day: a warm, addictive fishing game for Android. 8 spots, bosses, treasure, tournaments. Free, no account, plays offline.'
+  };
+  var playBase = 'https://play.google.com/store/apps/details?id=com.wanderfish.lovisrybka&referrer=utm_source%3Dwanderfish_site%26utm_medium%3Dweb';
+  var btns = document.querySelectorAll('[data-lang-btn]');
+  var privacy = document.getElementById('privacy');
+  var play = document.getElementById('play');
+  var dock = document.getElementById('dock');
+  var desc = document.querySelector('meta[name="description"]');
+
+  function show(l) {
+    var root = document.documentElement;
+    root.setAttribute('data-lang', l);
+    root.lang = l;
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-lang-btn') === l ? 'true' : 'false');
+    }
+    document.title = titles[l];
+    if (desc) desc.setAttribute('content', descs[l]);
+    if (privacy) privacy.href = 'https://vitosfbi1-maker.github.io/lovis-rybka-privacy/#' + l;
+    if (play) play.href = playBase + '&hl=' + l;
+    if (dock) dock.href = playBase + '&hl=' + l;
+  }
+  function start() {
+    var h = (location.hash || '').replace('#', '');
+    if (langs.indexOf(h) >= 0) return h;
+    try { var s = localStorage.getItem('wf-lang'); if (langs.indexOf(s) >= 0) return s; } catch (e) { /* хранилище недоступно */ }
+    var n = ((navigator.language || 'ru') + '').toLowerCase().slice(0, 2);
+    if (n === 'uk') return 'uk';
+    if (n === 'ru' || n === 'be') return 'ru';
+    return 'en';
+  }
+  show(start());
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function () {
+      var l = this.getAttribute('data-lang-btn');
+      show(l);
+      try { localStorage.setItem('wf-lang', l); } catch (e) { /* ничего */ }
+      try { history.replaceState(null, '', '#' + l); } catch (e) { /* ничего */ }
+    });
+  }
+
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* пузыри */
+  var bub = document.getElementById('bubbles');
+  if (bub && !calm) {
+    var seed = 7, rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    for (var b = 0; b < 16; b++) {
+      var el = document.createElement('i');
+      el.style.setProperty('--x', (rnd() * 96 + 2).toFixed(1) + '%');
+      el.style.setProperty('--s', (6 + rnd() * 16).toFixed(0) + 'px');
+      el.style.setProperty('--t', (9 + rnd() * 10).toFixed(1) + 's');
+      el.style.setProperty('--w', (-rnd() * 14).toFixed(1) + 's');
+      bub.appendChild(el);
+    }
+  }
+
+  /* появление блоков */
+  var rv = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !calm) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold: 0.12, rootMargin: '0px 0px -6% 0px'});
+    rv.forEach(function (n) { io.observe(n); });
+  } else {
+    rv.forEach(function (n) { n.classList.add('in'); });
+  }
+
+  /* плавающая кнопка: показываем, когда главная ушла вверх */
+  var cta = document.querySelector('.cta');
+  if (dock && cta && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      var e = es[0], on = !e.isIntersecting && e.boundingClientRect.top < 0;
+      dock.classList.toggle('on', on);
+      dock.setAttribute('aria-hidden', on ? 'false' : 'true');
+      dock.tabIndex = on ? 0 : -1;
+    }).observe(cta);
+  }
+
+  /* лёгкий наклон телефонов за мышью */
+  var stage = document.getElementById('stage'), sIn = document.getElementById('stageIn');
+  if (stage && sIn && !calm && window.matchMedia && matchMedia('(hover:hover)').matches) {
+    stage.addEventListener('pointermove', function (e) {
+      var r = stage.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      sIn.style.setProperty('--ry', (x * 14).toFixed(1) + 'deg');
+      sIn.style.setProperty('--rx', (-y * 10).toFixed(1) + 'deg');
+    });
+    stage.addEventListener('pointerleave', function () {
+      sIn.style.setProperty('--ry', '0deg'); sIn.style.setProperty('--rx', '0deg');
+    });
+  }
+
+  /* копирование адреса */
+  var copy = document.getElementById('copy'), mail = document.getElementById('mail');
+  if (copy && mail) {
+    var orig = copy.innerHTML;
+    copy.addEventListener('click', function () {
+      var done = function () {
+        var spans = copy.querySelectorAll('[data-l]'), t = copy.getAttribute('data-copied');
+        copy.textContent = copy.getAttribute('data-copied-' + document.documentElement.lang) || t;
+        setTimeout(function () { copy.innerHTML = orig; }, 1800);
+      };
+      var fallback = function () {
+        try {
+          var rg = document.createRange(); rg.selectNodeContents(mail);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+        } catch (e) { /* ничего */ }
+      };
+      try {
+        navigator.clipboard.writeText(mail.textContent.trim()).then(done, fallback);
+      } catch (e) { fallback(); }
+    });
+  }
+})();
+</script>
+</body>
+</html>
